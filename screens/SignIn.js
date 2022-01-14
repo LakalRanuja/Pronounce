@@ -1,14 +1,8 @@
-/* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
-import { View, Image, StyleSheet, Text } from 'react-native';
+import { View, Image, StyleSheet, Text, Alert } from 'react-native';
 import { TextInput, Button, List } from 'react-native-paper';
-// import auth from '@react-native-firebase/auth';
-// import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
-// import ListAccordionGroup from 'react-native-paper/lib/typescript/components/List/ListAccordionGroup';
+import { withNavigation } from 'react-navigation';
 
-// GoogleSignin.configure({
-//   webClientId: '',
-// });
 import SearchWords from './SearchWords';
 
 export default class SignIn extends Component {
@@ -19,41 +13,28 @@ export default class SignIn extends Component {
       email: '',
       password: '',
     };
-    this.emailHandler = this.emailHandler.bind(this)
-    this.passwordHandler = this.passwordHandler.bind(this)
 
-    // GoogleSignin.configure({
-    //   webClientId: '236313856268-e0metqhp3p47k2514vkp2lcpr7c2hd8r.apps.googleusercontent.com',
-    // });
   }
-
-  // signIn = async () => {
-  //   const { idToken } = await GoogleSignin.signIn();
-  //   const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-  //   auth().signInWithCredential(googleCredential).then((result) => {
-  //     if (result.user) {
-  //       this.props.navigation.navigate('Dashboard');
-  //     }
-  //   });
-  // }
 
   signIn = () => {
 
-    var data = new Headers();
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "text/plain");
 
-    return fetch('http://192.168.42.62:3000/customer' ,{
+    var requestOptions = {
       method: 'POST',
-      headers: data
-    })
-    .then(response => response.json())
-    .then(resp => {
-      if(resp.affectedRows > 0) {
-        console.log('Done');
-      }
-    })
-    .catch(err => {
-      console.log('Failed');
-    })
+      headers: myHeaders,
+      body: JSON.stringify({
+        email: "lakal@gmail.com",
+        password: "lakal123"
+      }),
+      redirect: this.props.navigation.navigate('Dashboard')
+    };
+
+    fetch("http://Pronounce-env-1.eba-a2mejgzf.us-east-2.elasticbeanstalk.com/login", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
   }
 
   render() {

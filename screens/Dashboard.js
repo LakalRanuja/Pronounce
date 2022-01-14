@@ -38,7 +38,6 @@ export default class Dashboard extends Component {
                 <Tab.Navigator initialRouteName="SearchWords">
                     <Tab.Screen name="Search" component={SearchWords} options={{
                         tabBarLabel: 'Search',
-                        tabBarBadge: 3,
                         header: () => null
                     }}/>
                     <Tab.Screen name="Home" component={FoundWords} options={{
